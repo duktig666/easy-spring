@@ -5,6 +5,7 @@ import cn.duktig.springframework.beans.PropertyValues;
 import cn.duktig.springframework.beans.factory.config.BeanDefinition;
 import cn.duktig.springframework.beans.factory.config.BeanReference;
 import cn.duktig.springframework.beans.factory.support.DefaultListableBeanFactory;
+import cn.duktig.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import cn.duktig.springframework.core.io.DefaultResourceLoader;
 import cn.duktig.springframework.core.io.Resource;
 import cn.duktig.springframework.test.bean.UserDao;
@@ -78,6 +79,35 @@ public class ApiTest {
         System.out.println(content);
     }
 
+    /**
+     * 测试加载远程文件
+     */
+    @Test
+    public void testUrl() throws IOException {
+        Resource resource = resourceLoader.getResource("https://cos.duktig.cn" +
+                "/project/test/config/important.properties");
+        InputStream inputStream = resource.getInputStream();
+        String content = IoUtil.readUtf8(inputStream);
+        System.out.println(content);
+    }
+
+    /**
+     * 测试从xml解析bean
+     */
+    @Test
+    public void testXml() {
+        // 1.初始化 BeanFactory
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2. 读取配置文件&注册Bean
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions("classpath:spring.xml");
+
+        // 3. 获取Bean对象调用方法
+        UserService userService = (UserService) beanFactory.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("测试结果：" + result);
+    }
 
 }
 
