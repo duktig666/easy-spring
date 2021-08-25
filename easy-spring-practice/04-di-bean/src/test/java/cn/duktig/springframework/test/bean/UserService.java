@@ -6,11 +6,11 @@ package cn.duktig.springframework.test.bean;
  * @author RenShiWei
  * Date: 2021/8/25 14:41
  **/
-public class UserService04 {
+public class UserService {
 
     private String uId;
 
-    private UserDao04 userDao;
+    private UserDao userDao;
 
     public void queryUserInfo() {
         System.out.println("查询用户信息：" + userDao.queryUserName(uId));
@@ -24,11 +24,11 @@ public class UserService04 {
         this.uId = uId;
     }
 
-    public UserDao04 getUserDao() {
+    public UserDao getUserDao() {
         return userDao;
     }
 
-    public void setUserDao(UserDao04 userDao) {
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 

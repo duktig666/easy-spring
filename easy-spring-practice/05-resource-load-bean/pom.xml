@@ -3,21 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>easy-spring</artifactId>
+        <artifactId>easy-spring-practice</artifactId>
         <groupId>cn.duktig</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>easy-spring-practice</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>01-simple-bean</module>
-        <module>02-base-bean</module>
-        <module>03-constructor-bean</module>
-        <module>04-di-bean</module>
-        <module>05-resource-load-bean</module>
-    </modules>
+    <artifactId>05-resource-load-bean</artifactId>
 
+    <name>05资源加载注入bean</name>
+    <description>设计与实现资源加载器，从Spring.xml解析和注册Bean对象</description>
 
 </project>

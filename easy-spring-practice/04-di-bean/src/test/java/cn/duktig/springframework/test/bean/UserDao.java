@@ -9,7 +9,7 @@ import java.util.Map;
  * @author RenShiWei
  * Date: 2021/8/25 17:42
  **/
-public class UserDao04 {
+public class UserDao {
 
     private static Map<String, String> hashMap = new HashMap<>();
 
