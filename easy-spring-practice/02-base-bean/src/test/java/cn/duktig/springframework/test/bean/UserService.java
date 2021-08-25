@@ -1,4 +1,4 @@
-package cn.bugstack.springframework.test.bean;
+package cn.duktig.springframework.test.bean;
 
 /**
  * description:测试的用户业务类

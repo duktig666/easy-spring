@@ -7,6 +7,10 @@
     <groupId>cn.duktig</groupId>
     <artifactId>easy-spring</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>easy-spring-practice</module>
+        <module>easy-spring-release</module>
+    </modules>
     <packaging>pom</packaging>
 
     <name>easy-spring</name>
@@ -150,9 +154,17 @@
     <!--  所有子工程的公共依赖  -->
     <dependencies>
         <!--    springboot启动器    -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--Spring boot 测试-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

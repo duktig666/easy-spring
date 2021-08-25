@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>01-simple-bean</module>
+        <module>02-base-bean</module>
     </modules>
 
 
