@@ -1,4 +1,6 @@
-package cn.duktig.springframework.beans.factory.config;
+package cn.duktig.springframework.beans.factory.support;
+
+import cn.duktig.springframework.beans.factory.config.SingletonBeanRegistry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

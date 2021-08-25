@@ -3,7 +3,6 @@ package cn.duktig.springframework.beans.factory.support;
 import cn.duktig.springframework.beans.BeansException;
 import cn.duktig.springframework.beans.factory.BeanFactory;
 import cn.duktig.springframework.beans.factory.config.BeanDefinition;
-import cn.duktig.springframework.beans.factory.config.DefaultSingletonBeanRegistry;
 
 /**
  * description:抽象bean工厂 其中一些抽象方法由子类实现
