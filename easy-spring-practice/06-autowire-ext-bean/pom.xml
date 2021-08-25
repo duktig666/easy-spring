@@ -3,22 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>easy-spring</artifactId>
+        <artifactId>easy-spring-practice</artifactId>
         <groupId>cn.duktig</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>easy-spring-practice</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>01-simple-bean</module>
-        <module>02-base-bean</module>
-        <module>03-constructor-bean</module>
-        <module>04-di-bean</module>
-        <module>05-resource-load-bean</module>
-        <module>06-autowire-ext-bean</module>
-    </modules>
+    <artifactId>06-autowire-ext-bean</artifactId>
 
+    <name>06自动装配和扩展机制</name>
+    <description>实现应用上下文，自动识别、资源加载、扩展机制</description>
 
 </project>
