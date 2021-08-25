@@ -9,8 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>02-base-bean</artifactId>
+    <artifactId>03-constructor-bean</artifactId>
 
+    <name>03根据构造函数选择实例化策略</name>
     <description>基于Cglib实现含构造函数的类实例化策略</description>
 
 </project>

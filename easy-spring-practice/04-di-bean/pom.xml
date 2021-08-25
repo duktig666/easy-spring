@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>02-base-bean</artifactId>
+    <artifactId>04-di-bean</artifactId>
 
-    <name>02定义注册和实例化bean</name>
-    <description>运用设计模式，实现 Bean 的定义、注册、获取</description>
+    <name>04属性注入</name>
+    <description>实现Bean对象注入属性和依赖</description>
 
 </project>

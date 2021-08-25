@@ -11,6 +11,7 @@
 
     <artifactId>01-simple-bean</artifactId>
 
+    <name>01实现一个容器</name>
     <description>实现的一个简单bean容器的功能</description>
 
 
