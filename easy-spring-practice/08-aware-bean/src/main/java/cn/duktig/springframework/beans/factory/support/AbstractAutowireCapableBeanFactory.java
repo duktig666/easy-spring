@@ -3,8 +3,7 @@ package cn.duktig.springframework.beans.factory.support;
 import cn.duktig.springframework.beans.BeansException;
 import cn.duktig.springframework.beans.PropertyValue;
 import cn.duktig.springframework.beans.PropertyValues;
-import cn.duktig.springframework.beans.factory.DisposableBean;
-import cn.duktig.springframework.beans.factory.InitializingBean;
+import cn.duktig.springframework.beans.factory.*;
 import cn.duktig.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import cn.duktig.springframework.beans.factory.config.BeanDefinition;
 import cn.duktig.springframework.beans.factory.config.BeanPostProcessor;
@@ -43,7 +42,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             bean = this.createBeanInstance(beanDefinition, beanName, args);
             // 给 Bean 填充属性
             this.applyPropertyValues(beanName, bean, beanDefinition);
-            // 执行 Bean 的初始化方法和 BeanPostProcessor 的前置和后置
+            // 执行 Bean 的初始化方法和 BeanPostProcessor 的前置和后置处理方法
             bean = initializeBean(beanName, bean, beanDefinition);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
@@ -99,8 +98,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         try {
             PropertyValues propertyValues = beanDefinition.getPropertyValues();
             for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
+
                 String name = propertyValue.getName();
                 Object value = propertyValue.getValue();
+
                 if (value instanceof BeanReference) {
                     // A 依赖 B，获取 B 的实例化
                     BeanReference beanReference = (BeanReference) value;
@@ -122,15 +123,21 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         this.instantiationStrategy = instantiationStrategy;
     }
 
-    /**
-     * 实例化bean的操作
-     *
-     * @param beanName       bean名称
-     * @param bean           bean对象
-     * @param beanDefinition bean定义
-     * @return 实例化完成后的bean对象
-     */
-    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) throws Exception {
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+
+        // invokeAwareMethods 进行感知类的处理
+        if (bean instanceof Aware) {
+            if (bean instanceof BeanFactoryAware) {
+                ((BeanFactoryAware) bean).setBeanFactory(this);
+            }
+            if (bean instanceof BeanClassLoaderAware) {
+                ((BeanClassLoaderAware) bean).setBeanClassLoader(getBeanClassLoader());
+            }
+            if (bean instanceof BeanNameAware) {
+                ((BeanNameAware) bean).setBeanName(beanName);
+            }
+        }
+
         // 1. 执行 BeanPostProcessor Before 处理
         Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
 
@@ -140,6 +147,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         } catch (Exception e) {
             throw new BeansException("Invocation of init method of bean[" + beanName + "] failed", e);
         }
+
         // 2. 执行 BeanPostProcessor After 处理
         wrappedBean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
         return wrappedBean;

@@ -4,6 +4,7 @@ import cn.duktig.springframework.beans.BeansException;
 import cn.duktig.springframework.beans.factory.config.BeanDefinition;
 import cn.duktig.springframework.beans.factory.config.BeanPostProcessor;
 import cn.duktig.springframework.beans.factory.config.ConfigurableBeanFactory;
+import cn.duktig.springframework.util.ClassUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.List;
  * Date: 2021/8/25 14:21
  **/
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+
+    /** ClassLoader to resolve bean class names with, if necessary */
+    private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
     /** BeanPostProcessors to apply in createBean */
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
@@ -110,6 +114,15 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
      */
     public List<BeanPostProcessor> getBeanPostProcessors() {
         return this.beanPostProcessors;
+    }
+
+    /**
+     * 获得当前的类加载器
+     *
+     * @return 当前的类加载器
+     */
+    public ClassLoader getBeanClassLoader() {
+        return this.beanClassLoader;
     }
 
 }

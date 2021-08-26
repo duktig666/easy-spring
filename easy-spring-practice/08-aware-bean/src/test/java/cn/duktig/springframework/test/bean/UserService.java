@@ -1,7 +1,12 @@
 package cn.duktig.springframework.test.bean;
 
-import cn.duktig.springframework.beans.factory.DisposableBean;
-import cn.duktig.springframework.beans.factory.InitializingBean;
+import cn.duktig.springframework.beans.BeansException;
+import cn.duktig.springframework.beans.factory.BeanClassLoaderAware;
+import cn.duktig.springframework.beans.factory.BeanFactory;
+import cn.duktig.springframework.beans.factory.BeanFactoryAware;
+import cn.duktig.springframework.beans.factory.BeanNameAware;
+import cn.duktig.springframework.context.ApplicationContext;
+import cn.duktig.springframework.context.ApplicationContextAware;
 
 /**
  * description:测试的用户业务类
@@ -9,12 +14,35 @@ import cn.duktig.springframework.beans.factory.InitializingBean;
  * @author RenShiWei
  * Date: 2021/8/25 14:41
  **/
-public class UserService implements InitializingBean, DisposableBean {
+public class UserService implements BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware {
+
+    private ApplicationContext applicationContext;
+    private BeanFactory beanFactory;
 
     private String uId;
     private String company;
     private String location;
     private UserDao userDao;
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean Name is：" + name);
+    }
+
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        System.out.println("ClassLoader：" + classLoader);
+    }
 
     public String queryUserInfo() {
         return userDao.queryUserName(uId) + "," + company + "," + location;
@@ -52,15 +80,15 @@ public class UserService implements InitializingBean, DisposableBean {
         this.userDao = userDao;
     }
 
-    @Override
-    public void destroy() throws Exception {
-        System.out.println("执行：UserService.destroy");
+
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("执行：UserService.afterPropertiesSet");
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
     }
+
 
 }
 
