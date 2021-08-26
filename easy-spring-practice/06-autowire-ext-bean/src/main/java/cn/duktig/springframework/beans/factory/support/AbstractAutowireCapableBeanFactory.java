@@ -3,7 +3,9 @@ package cn.duktig.springframework.beans.factory.support;
 import cn.duktig.springframework.beans.BeansException;
 import cn.duktig.springframework.beans.PropertyValue;
 import cn.duktig.springframework.beans.PropertyValues;
+import cn.duktig.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import cn.duktig.springframework.beans.factory.config.BeanDefinition;
+import cn.duktig.springframework.beans.factory.config.BeanPostProcessor;
 import cn.duktig.springframework.beans.factory.config.BeanReference;
 import cn.hutool.core.bean.BeanUtil;
 
@@ -15,7 +17,7 @@ import java.lang.reflect.Constructor;
  * @author RenShiWei
  * Date: 2021/8/25 14:28
  **/
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
 
     /** 现在默认使用的Cglib的方式，正确是根据不同的情况自动进行选择 */
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
@@ -32,10 +34,15 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) {
         Object bean = null;
-        //反射 创建bean对象
-        bean = this.createBeanInstance(beanDefinition, beanName, args);
-        // 给 Bean 填充属性
-        this.applyPropertyValues(beanName, bean, beanDefinition);
+        try {
+            //反射 创建bean对象
+            bean = this.createBeanInstance(beanDefinition, beanName, args);
+            // 给 Bean 填充属性
+            this.applyPropertyValues(beanName, bean, beanDefinition);
+            bean = initializeBean(beanName, bean, beanDefinition);
+        } catch (Exception e) {
+            throw new BeansException("Instantiation of bean failed", e);
+        }
         //注册单例对象
         addSingleton(beanName, bean);
         return bean;
@@ -94,5 +101,74 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         this.instantiationStrategy = instantiationStrategy;
     }
 
-}
+    /**
+     * 实例化bean的操作
+     *
+     * @param beanName       bean名称
+     * @param bean           bean对象
+     * @param beanDefinition bean定义
+     * @return 实例化完成后的bean对象
+     */
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+        // 1. 执行 BeanPostProcessor Before 处理
+        Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
 
+        // 待完成内容：invokeInitMethods(beanName, wrappedBean, beanDefinition);
+        invokeInitMethods(beanName, wrappedBean, beanDefinition);
+
+        // 2. 执行 BeanPostProcessor After 处理
+        wrappedBean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        return wrappedBean;
+    }
+
+    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {
+
+    }
+
+    /**
+     * 执行 BeanPostProcessors 接口实现类的 postProcessBeforeInitialization 方法
+     * <p>
+     * 实现自 AutowireCapableBeanFactory  接口
+     *
+     * @param existingBean 已经存在的Bean对象
+     * @param beanName     bean名称
+     * @return 实例化前的bean对象
+     * @throws BeansException /
+     */
+    @Override
+    public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName) throws BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessBeforeInitialization(result, beanName);
+            if (null == current) {
+                return result;
+            }
+            result = current;
+        }
+        return result;
+    }
+
+    /**
+     * 执行 BeanPostProcessors 接口实现类的 postProcessorsAfterInitialization 方法
+     * <p>
+     * 实现自 AutowireCapableBeanFactory  接口
+     *
+     * @param existingBean 已经存在的Bean对象
+     * @param beanName     bean名称
+     * @return 实例化后的bean对象
+     * @throws BeansException /
+     */
+    @Override
+    public Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName) throws BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessAfterInitialization(result, beanName);
+            if (null == current) {
+                return result;
+            }
+            result = current;
+        }
+        return result;
+    }
+
+}
