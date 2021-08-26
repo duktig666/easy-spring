@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>easy-spring-practice</artifactId>
+        <groupId>cn.duktig</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>07-init-destroy-bean</artifactId>
+
+    <name>07bean的初始化和销毁</name>
+    <description>向虚拟机注册钩子，实现Bean对象的初始化和销毁方法</description>
+
+</project>

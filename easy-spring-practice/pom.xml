@@ -18,6 +18,7 @@
         <module>04-di-bean</module>
         <module>05-resource-load-bean</module>
         <module>06-autowire-ext-bean</module>
+        <module>07-init-destroy-bean</module>
     </modules>
 
 
