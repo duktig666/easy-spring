@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-    <bean id="userDao" class="cn.duktig.springframework.test.bean.UserDao" init-method="initDataMethod"
-          destroy-method="destroyDataMethod"/>
+    <bean id="proxyUserDao" class="cn.duktig.springframework.test.bean.ProxyBeanFactory"/>
 
+    <!--  调试 scope="prototype/singleton" 测试单例/原型模式是否正常 -->
     <bean id="userService" class="cn.duktig.springframework.test.bean.UserService">
         <property name="uId" value="10001"/>
         <property name="company" value="腾讯"/>
         <property name="location" value="深圳"/>
-        <property name="userDao" ref="userDao"/>
+        <property name="userDao" ref="proxyUserDao"/>
     </bean>
+
 
 </beans>

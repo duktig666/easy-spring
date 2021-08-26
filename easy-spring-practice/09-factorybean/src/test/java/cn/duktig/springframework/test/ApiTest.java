@@ -5,7 +5,7 @@ import cn.duktig.springframework.test.bean.UserService;
 import org.junit.Test;
 
 /**
- * description:测试 【定义标记类型Aware接口，实现感知容器对象】
+ * description:测试 【关于Bean对象作用域以及FactoryBean的实现和使用】
  *
  * @author RenShiWei
  * Date: 2021/8/25 14:42
@@ -13,21 +13,36 @@ import org.junit.Test;
 public class ApiTest {
 
     /**
-     * 测试 aware 感知bean对象
+     * 测试 单例/原型 模式是否生效
      */
     @Test
-    public void testXml() {
+    public void testPrototype() {
         // 1.初始化 BeanFactory
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
         applicationContext.registerShutdownHook();
 
         // 2. 获取Bean对象调用方法
-        UserService userService = applicationContext.getBean("userService", UserService.class);
-        String result = userService.queryUserInfo();
-        System.out.println("测试结果：" + result);
+        UserService userService01 = applicationContext.getBean("userService", UserService.class);
+        UserService userService02 = applicationContext.getBean("userService", UserService.class);
 
-        System.out.println("ApplicationContextAware：" + userService.getApplicationContext());
-        System.out.println("BeanFactoryAware：" + userService.getBeanFactory());
+        // 3. 配置 scope="prototype/singleton"
+        System.out.println(userService01);
+        System.out.println(userService02);
+
+        System.out.println(userService01 == userService02);
+    }
+
+    /**
+     * 测试  FactoryBea 定制 IUserDao的bean创建过程
+     */
+    @Test
+    public void testFactoryBean() {
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+        // 2. 调用代理方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        System.out.println("测试结果：" + userService.queryUserInfo());
     }
 
 

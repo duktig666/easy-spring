@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-    <bean id="userDao" class="cn.duktig.springframework.test.bean.UserDao"/>
+    <bean id="userDao" class="cn.duktig.springframework.test.bean.IUserDao"/>
 
     <bean id="userService" class="cn.duktig.springframework.test.bean.UserService">
         <property name="uId" value="10001"/>

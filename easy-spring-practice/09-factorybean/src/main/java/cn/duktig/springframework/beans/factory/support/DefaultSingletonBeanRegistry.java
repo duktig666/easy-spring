@@ -17,7 +17,12 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
 
-    private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
+    /**
+     * null单例对象的内部标记：用作并发映射的标记值(不支持空值)。
+     */
+    protected static final Object NULL_OBJECT = new Object();
+
+    private Map<String, Object> singletonObjects = new ConcurrentHashMap<>();
 
     private final Map<String, DisposableBean> disposableBeans = new LinkedHashMap<>();
 

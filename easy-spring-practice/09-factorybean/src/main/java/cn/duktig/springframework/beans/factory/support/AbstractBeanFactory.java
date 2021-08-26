@@ -1,6 +1,7 @@
 package cn.duktig.springframework.beans.factory.support;
 
 import cn.duktig.springframework.beans.BeansException;
+import cn.duktig.springframework.beans.factory.FactoryBean;
 import cn.duktig.springframework.beans.factory.config.BeanDefinition;
 import cn.duktig.springframework.beans.factory.config.BeanPostProcessor;
 import cn.duktig.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author RenShiWei
  * Date: 2021/8/25 14:21
  **/
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport implements ConfigurableBeanFactory {
 
     /** ClassLoader to resolve bean class names with, if necessary */
     private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
@@ -56,6 +57,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
      * @throws BeansException bean异常
      */
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T getBean(String beanName, Class<T> requiredType) throws BeansException {
         return (T) getBean(beanName);
     }
@@ -67,13 +69,39 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
      * @param args     构造器参数
      * @return bean对象
      */
-    protected Object doGetBean(final String beanName, final Object[] args) {
-        Object bean = getSingleton(beanName);
-        if (bean != null) {
-            return bean;
+    @SuppressWarnings("unchecked")
+    protected <T> T doGetBean(final String beanName, final Object[] args) {
+        Object sharedInstance = getSingleton(beanName);
+        if (sharedInstance != null) {
+            // 如果是 FactoryBean，则需要调用 FactoryBean#getObject
+            return (T) getObjectForBeanInstance(sharedInstance, beanName);
         }
+
         BeanDefinition beanDefinition = getBeanDefinition(beanName);
-        return createBean(beanName, beanDefinition, args);
+        Object bean = createBean(beanName, beanDefinition, args);
+        return (T) getObjectForBeanInstance(bean, beanName);
+    }
+
+    /**
+     * 获取 FactoryBean 的操作
+     *
+     * @param beanInstance /
+     * @param beanName     /
+     * @return /
+     */
+    private Object getObjectForBeanInstance(Object beanInstance, String beanName) {
+        if (! (beanInstance instanceof FactoryBean)) {
+            return beanInstance;
+        }
+
+        Object object = this.getCachedObjectForFactoryBean(beanName);
+
+        if (object == null) {
+            FactoryBean<?> factoryBean = (FactoryBean<?>) beanInstance;
+            object = this.getObjectFromFactoryBean(factoryBean, beanName);
+        }
+
+        return object;
     }
 
 

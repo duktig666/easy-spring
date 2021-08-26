@@ -10,6 +10,10 @@ import cn.duktig.springframework.beans.PropertyValues;
  **/
 public class BeanDefinition {
 
+    String SCOPE_SINGLETON = ConfigurableBeanFactory.SCOPE_SINGLETON;
+
+    String SCOPE_PROTOTYPE = ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+
     /** bean的 Class对象 */
     private Class<?> beanClass;
     /** bean的属性列表 */
@@ -19,6 +23,15 @@ public class BeanDefinition {
     /** bean销毁的方法名 */
     private String destroyMethodName;
 
+    /** 当前对象的 作用域（默认单例） */
+    private String scope = SCOPE_SINGLETON;
+
+    /** 用于把从 spring.xml 中解析到的 Bean 对象作用范围填充到属性 */
+    private boolean singleton = true;
+
+    /** 用于把从 spring.xml 中解析到的 Bean 对象作用范围填充到属性 */
+    private boolean prototype = false;
+
     public BeanDefinition(Class<?> beanClass) {
         this.beanClass = beanClass;
         this.propertyValues = new PropertyValues();
@@ -27,6 +40,20 @@ public class BeanDefinition {
     public BeanDefinition(Class<?> beanClass, PropertyValues propertyValues) {
         this.beanClass = beanClass;
         this.propertyValues = propertyValues != null ? propertyValues : new PropertyValues();
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+        this.singleton = SCOPE_SINGLETON.equals(scope);
+        this.prototype = SCOPE_PROTOTYPE.equals(scope);
+    }
+
+    public boolean isSingleton() {
+        return singleton;
+    }
+
+    public boolean isPrototype() {
+        return prototype;
     }
 
     public Class<?> getBeanClass() {
