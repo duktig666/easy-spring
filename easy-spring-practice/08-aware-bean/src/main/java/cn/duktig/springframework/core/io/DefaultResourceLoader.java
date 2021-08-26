@@ -1,4 +1,4 @@
-package cn.duktig.springframework.io;
+package cn.duktig.springframework.core.io;
 
 import cn.hutool.core.lang.Assert;
 

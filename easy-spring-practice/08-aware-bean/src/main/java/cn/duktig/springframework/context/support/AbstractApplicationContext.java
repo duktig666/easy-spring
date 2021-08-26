@@ -5,7 +5,7 @@ import cn.duktig.springframework.beans.factory.ConfigurableListableBeanFactory;
 import cn.duktig.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import cn.duktig.springframework.beans.factory.config.BeanPostProcessor;
 import cn.duktig.springframework.context.ConfigurableApplicationContext;
-import cn.duktig.springframework.io.DefaultResourceLoader;
+import cn.duktig.springframework.core.io.DefaultResourceLoader;
 
 import java.util.Map;
 
