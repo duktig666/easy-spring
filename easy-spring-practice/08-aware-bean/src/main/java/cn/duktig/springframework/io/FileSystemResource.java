@@ -1,4 +1,4 @@
-package cn.duktig.springframework.core.io;
+package cn.duktig.springframework.io;
 
 import java.io.File;
 import java.io.FileInputStream;

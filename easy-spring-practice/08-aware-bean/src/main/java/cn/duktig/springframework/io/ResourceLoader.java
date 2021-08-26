@@ -1,4 +1,4 @@
-package cn.duktig.springframework.core.io;
+package cn.duktig.springframework.io;
 
 /**
  * description: 资源加载器 接口

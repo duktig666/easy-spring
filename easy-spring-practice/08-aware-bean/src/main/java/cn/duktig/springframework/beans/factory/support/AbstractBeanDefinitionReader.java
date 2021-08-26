@@ -1,7 +1,7 @@
 package cn.duktig.springframework.beans.factory.support;
 
-import cn.duktig.springframework.core.io.DefaultResourceLoader;
-import cn.duktig.springframework.core.io.ResourceLoader;
+import cn.duktig.springframework.io.DefaultResourceLoader;
+import cn.duktig.springframework.io.ResourceLoader;
 
 /**
  * description:Bean定义 读取资源 抽象类

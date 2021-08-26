@@ -1,8 +1,8 @@
 package cn.duktig.springframework.beans.factory.support;
 
 import cn.duktig.springframework.beans.BeansException;
-import cn.duktig.springframework.core.io.Resource;
-import cn.duktig.springframework.core.io.ResourceLoader;
+import cn.duktig.springframework.io.Resource;
+import cn.duktig.springframework.io.ResourceLoader;
 
 /**
  * description: Bean定义 读取资源 接口

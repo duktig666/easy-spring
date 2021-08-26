@@ -1,4 +1,4 @@
-package cn.duktig.springframework.core.io;
+package cn.duktig.springframework.io;
 
 import java.io.IOException;
 import java.io.InputStream;

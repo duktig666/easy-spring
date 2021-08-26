@@ -11,7 +11,7 @@
 
     <artifactId>08-aware-bean</artifactId>
 
-    <name>08Aware接口感知容器对象</name>
+    <name>08aware感知容器对象</name>
     <description>定义标记类型Aware接口，实现感知容器对象</description>
 
 </project>
