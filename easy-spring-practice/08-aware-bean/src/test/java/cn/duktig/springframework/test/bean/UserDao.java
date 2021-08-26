@@ -15,9 +15,9 @@ public class UserDao {
 
     public void initDataMethod() {
         System.out.println("执行：init-method");
-        hashMap.put("10001", "小傅哥");
-        hashMap.put("10002", "八杯水");
-        hashMap.put("10003", "阿毛");
+        hashMap.put("10001", "duktig1号");
+        hashMap.put("10002", "duktig2号");
+        hashMap.put("10003", "duktig3号");
     }
 
     public void destroyDataMethod() {
