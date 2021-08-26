@@ -19,6 +19,7 @@
         <module>05-resource-load-bean</module>
         <module>06-autowire-ext-bean</module>
         <module>07-init-destroy-bean</module>
+        <module>08-aware-bean</module>
     </modules>
 
 
