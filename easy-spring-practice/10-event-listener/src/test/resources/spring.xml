@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-    <bean id="proxyUserDao" class="cn.duktig.springframework.test.bean.ProxyBeanFactory"/>
+    <bean class="cn.duktig.springframework.test.event.ContextRefreshedEventListener"/>
 
-    <!--  调试 scope="prototype/singleton" 测试单例/原型模式是否正常 -->
-    <bean id="userService" class="cn.duktig.springframework.test.bean.UserService">
-        <property name="uId" value="10001"/>
-        <property name="company" value="腾讯"/>
-        <property name="location" value="深圳"/>
-        <property name="userDao" ref="proxyUserDao"/>
-    </bean>
+    <bean class="cn.duktig.springframework.test.event.CustomEventListener"/>
 
+    <bean class="cn.duktig.springframework.test.event.ContextClosedEventListener"/>
 
 </beans>
